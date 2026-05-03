@@ -59,7 +59,7 @@
        RESET & BASE
     ══════════════════════════════════════ */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
     body {
       font-family: var(--font-body);
       background: var(--bg);
@@ -2225,10 +2225,24 @@
 
     /* ══════════════════════════════════════
        MOBILE RESPONSIVE
-       768px — tablettes & grands téléphones
-       480px — téléphones standards
-       360px — très petits téléphones
+       900px — Booking centré quand empilé
+       768px — Tablettes & grands téléphones
+       639px — Header CTA visible
+       480px — Téléphones standards
+       360px — Très petits téléphones
     ══════════════════════════════════════ */
+
+    /* ── 900px — Booking centré quand empilé ── */
+    @media (max-width: 900px) {
+      .booking-text {
+        text-align: center;
+        align-items: center;
+      }
+      .booking-text .eyebrow { justify-content: center; }
+      .booking-text p { max-width: none; }
+      .booking-text .urgency-box { justify-content: center; }
+      .booking-text .btn-full { max-width: 480px; }
+    }
 
     /* ── 768px ─────────────────────────── */
     @media (max-width: 768px) {
@@ -2243,10 +2257,6 @@
       #hero { padding: 36px 0 0; }
       .cta-block { padding: 20px 0 32px; }
 
-      /* Accel */
-      .accel-card { padding: 32px 28px; }
-      .process-note { font-size: 14px; gap: 10px; padding: 16px 20px; }
-
       /* Booking — remove sticky on mobile */
       .booking-text { position: static; top: auto; }
 
@@ -2254,126 +2264,164 @@
       .stats-triangle { gap: 10px; margin-top: 20px; }
       .stat-card { padding: 16px 20px; min-width: 120px; }
 
+      /* Accel */
+      .accel-card { padding: 32px 28px; }
+      .process-note { font-size: 14px; gap: 10px; padding: 16px 20px; }
+
       /* FAQ */
       .fq-q { padding: 20px 24px; }
       .fq-a { padding: 0 24px; }
       .fq.open .fq-a { padding: 0 24px 22px; }
     }
 
+    /* ── 639px — Header CTA toujours visible ── */
+    @media (max-width: 639px) {
+      .header-cta {
+        display: inline-flex !important;
+        font-size: 12px;
+        padding: 8px 13px;
+        white-space: nowrap;
+      }
+      /* Shrink logo text on very small headers */
+      .logo { font-size: 13px; gap: 7px; }
+      .logo-diamond { width: 24px; height: 24px; }
+    }
+
     /* ── 480px ─────────────────────────── */
     @media (max-width: 480px) {
 
-      /* Global spacing */
-      .sec     { padding: 56px 0; }
-      .sec--lg { padding: 56px 0; }
-      .sec--sm { padding: 44px 0; }
-      .wrap    { padding: 0 18px; }
+      /* ─ Global ─ */
+      .sec      { padding: 56px 0; }
+      .sec--lg  { padding: 56px 0; }
+      .sec--sm  { padding: 44px 0; }
+      .wrap     { padding: 0 18px; }
       .wrap--sm { padding: 0 18px; }
       .wrap--md { padding: 0 18px; }
       .sec-header { margin-bottom: 28px; }
-      .divider { margin: 0; }
 
-      /* Hero */
+      /* Section h2 — taille réduite pour tenir sur 2 lignes */
+      .sec-header h2 {
+        font-size: 18px !important;
+        line-height: 1.35;
+        letter-spacing: -0.02em;
+      }
+      #process .sec-header h2 { font-size: 17px !important; }
+      .sec-header p { font-size: 14px; margin-top: 12px; }
+
+      /* ─ Hero ─ */
       #hero { padding: 28px 0 0; }
       .hero-title {
-        font-size: clamp(1.7rem, 7.5vw, 2.2rem);
+        font-size: clamp(1.55rem, 7vw, 1.9rem);
         letter-spacing: -0.03em;
       }
-      /* Hide forced <br> — text wraps naturally on small screens */
       .hero-title br { display: none; }
       .hero-sub { font-size: 14px; margin-bottom: 16px; }
 
-      /* CTA buttons — full width + comfortable tap target */
+      /* ─ CTA buttons — pleine largeur ─ */
       .cta-block { padding: 16px 0 24px; gap: 10px; }
       .cta-block .btn-primary,
       .cta-center .btn-primary {
         width: 100%;
         justify-content: center;
-        font-size: 15px;
-        padding: 16px 20px;
+        font-size: 13px;
+        padding: 15px 16px;
+        white-space: normal;
+        text-align: center;
+        line-height: 1.4;
       }
       .cta-block .btn-xl,
       .cta-center .btn-xl { border-radius: 16px !important; }
       .cta-center { padding: 36px 0 0; }
       .cta-center .sub { font-size: 12px; }
 
-      /* Urgency pill — allow text wrapping */
+      /* ─ Urgency pill ─ */
       .urgency-pill {
-        font-size: 12px;
-        padding: 7px 14px;
-        white-space: normal;
-        text-align: center;
-        line-height: 1.5;
+        font-size: 12px; padding: 7px 14px;
+        white-space: normal; text-align: center; line-height: 1.5;
       }
 
-      /* Header CTA */
-      .header-cta { font-size: 13px; padding: 9px 16px; }
-
-      /* Stats row */
+      /* ─ Stats row ─ */
       .stat-cell { padding: 22px 14px; }
       .stat-desc { font-size: 12px; }
 
-      /* Section headers */
-      .sec-header h2 { font-size: clamp(1.5rem, 6.5vw, 2rem); }
-      .sec-header p  { font-size: 14px; margin-top: 12px; }
-
-      /* Problem split — already stacks, tighten padding */
-      .prob-panel { padding: 26px 20px; gap: 7px; }
-      .prob-panel--bad::after  { font-size: 52px; right: 10px; }
-      .prob-panel--good::after { font-size: 64px; right: 14px; }
-
-      /* Insight box */
+      /* ─ Insight box ─ */
       .insight-box { padding: 20px 18px; }
 
-      /* Compare table — smaller text so it scrolls less */
-      table { font-size: 12px; }
+      /* ─ Tableau 3 chemins ─
+         On mobile : masque les 2 colonnes "mauvaises"
+         → garde uniquement Critère + Crack Editing */
+      .compare-wrap { overflow-x: visible; }
+      table { font-size: 12px; table-layout: fixed; width: 100%; }
+      /* Masquer colonnes 2 et 3 (Seul / Les Écoles) */
+      thead th:nth-child(2),
+      thead th:nth-child(3),
+      tbody td:nth-child(2),
+      tbody td:nth-child(3) { display: none; }
+      /* Redistribuer l'espace entre les 2 colonnes restantes */
+      thead th:nth-child(1),
+      tbody td:nth-child(1) { width: 45%; }
+      thead th:nth-child(4),
+      tbody td:nth-child(4) { width: 55%; }
       thead th { padding: 14px 12px; font-size: 12px; }
-      tbody td  { padding: 12px 12px; font-size: 12px; }
+      tbody td { padding: 12px 12px; font-size: 12px; }
 
-      /* Process piliers */
+      /* ─ Process piliers ─ */
       .phase-list { gap: 14px; margin-top: 32px; }
 
-      /* XP bar — reduce height for smaller visual column */
-      .pv-xp-scene    { height: 180px; }
-      .pv-xp-bar-col  { height: 180px; }
+      /* ─ Pilier 1 XP bar ─ */
+      .pv-xp-scene   { height: 180px; }
+      .pv-xp-bar-col { height: 180px; }
 
-      /* Eye visual */
-      .pv-eye-svg { width: 170px; height: 85px; }
-      .pv-eye-scene { min-height: 190px; }
+      /* ─ Pilier 2 eye — taille réduite ─ */
+      .pv-eye-svg   { width: 150px; height: 75px; }
+      .pv-eye-scene { min-height: 200px; }
+      /* Masquer les 2 dernières étiquettes du BL orbit pour éviter l'overlap */
+      #pv-orbit-bl .pv-style-name:nth-child(n+3) { display: none; }
+      /* Réduire la taille du texte des orbits */
+      .pv-style-name { font-size: 10px; padding: 2px 7px; }
+      .pv-orbit[data-o="tl"] { top: 2%; left: 0; }
+      .pv-orbit[data-o="tr"] { top: 2%; right: 0; }
+      .pv-orbit[data-o="bl"] { bottom: 2%; left: 0; }
+      .pv-orbit[data-o="br"] { bottom: 2%; right: 0; }
 
-      /* Accel card */
+      /* ─ Accel ─ */
       .accel-card { padding: 28px 18px; }
       .accel-icon { width: 44px; height: 44px; }
 
-      /* Process note */
+      /* ─ Process note ─ */
       .process-note { flex-wrap: wrap; font-size: 13px; padding: 14px 16px; }
 
-      /* Marc section */
-      .marc-layout { gap: 36px; }
-      .photo-row   { gap: 10px; }
-      .stat-card   { padding: 14px 14px; min-width: 100px; }
+      /* ─ Marc section ─ */
+      .marc-layout   { gap: 36px; }
+      .photo-row     { gap: 10px; }
+      .stat-card     { padding: 14px 14px; min-width: 100px; }
       .stat-card-val { font-size: clamp(18px, 5.5vw, 26px); }
-      .story-body  { font-size: 15px; line-height: 1.75; }
+      .story-body    { font-size: 15px; line-height: 1.75; }
       .story-divider { margin: 20px 0; }
 
-      /* Testimonials */
+      /* ─ Testimonials ─ */
       .testi-cols-wrap { max-height: 440px; margin-top: 36px; }
 
-      /* FAQ */
+      /* ─ FAQ ─ */
       .fq-q { padding: 18px 18px; font-size: 14px; }
       .fq-a { padding: 0 18px; }
       .fq.open .fq-a { padding: 0 18px 18px; }
       .fq-a p { font-size: 13px; }
 
-      /* Booking */
+      /* ─ Booking ─ */
       .booking-frame { min-height: 520px; }
       .urgency-box   { padding: 14px 16px; gap: 10px; }
       .urgency-box p { font-size: 13px; }
       .booking-wrap  { border-radius: var(--r-md); }
 
-      /* Footer */
+      /* ─ Footer ─ */
       #footer { padding: 36px 0; }
       .footer-text { font-size: 12px; }
+
+      /* ─ Prob split ─ */
+      .prob-panel { padding: 26px 20px; gap: 7px; }
+      .prob-panel--bad::after  { font-size: 52px; right: 10px; }
+      .prob-panel--good::after { font-size: 64px; right: 14px; }
     }
 
     /* ── 360px — très petits téléphones ── */
@@ -2382,26 +2430,30 @@
       .wrap--sm { padding: 0 14px; }
       .wrap--md { padding: 0 14px; }
 
-      .hero-title { font-size: clamp(1.5rem, 8vw, 1.85rem); }
-      .stat-card  { min-width: 88px; padding: 12px 10px; }
+      .hero-title { font-size: clamp(1.4rem, 7.5vw, 1.7rem); }
+      .sec-header h2 { font-size: 16px !important; }
+      #process .sec-header h2 { font-size: 15px !important; }
 
-      .stat-cell  { padding: 18px 10px; }
-      .stat-desc  { font-size: 11px; }
-
-      /* Table on very small screens */
-      table { font-size: 11px; }
-      thead th, tbody td { padding: 10px 8px; }
+      .stat-card { min-width: 88px; padding: 12px 10px; }
+      .stat-cell { padding: 18px 10px; }
+      .stat-desc { font-size: 11px; }
 
       /* Phase content */
       .phase-content { padding: 20px 16px !important; }
       .phase-visual  { padding: 18px 14px !important; min-height: 170px !important; }
 
-      /* CTA button text can get long — ensure it wraps cleanly */
-      .btn-primary { line-height: 1.35; }
+      /* Pilier 2 eye encore plus petit */
+      .pv-eye-svg { width: 130px; height: 65px; }
+
+      /* CTA button text wrap propre */
+      .btn-primary { line-height: 1.4; }
 
       /* Urgency box */
       .urgency-box { flex-direction: column; text-align: center; }
-      .urgency-box svg { display: none; }
+      .urgency-box > svg { display: none; }
+
+      /* Header ultra compact */
+      .logo { font-size: 11px; }
     }
   </style>
 </head>
