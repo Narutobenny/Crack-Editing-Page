@@ -2310,11 +2310,16 @@
 
       /* ─ Hero ─ */
       #hero { padding: 28px 0 0; }
+      /* Font calibrée pour que chaque ligne du titre tienne sur une ligne :
+         "Deviens le monteur que tout le monde s'arrache" (47 chars)
+         nécessite env. 4.1vw pour rester sur une seule ligne à 375px+ */
       .hero-title {
-        font-size: clamp(1.55rem, 7vw, 1.9rem);
+        font-size: clamp(13px, 4.1vw, 1.9rem);
         letter-spacing: -0.03em;
+        line-height: 1.18;
       }
-      .hero-title br { display: none; }
+      /* Rétablir le <br> → 2 lignes exactement comme demandé */
+      .hero-title br { display: inline; }
       .hero-sub { font-size: 14px; margin-bottom: 16px; }
 
       /* ─ CTA buttons — pleine largeur ─ */
@@ -2430,7 +2435,9 @@
       .wrap--sm { padding: 0 14px; }
       .wrap--md { padding: 0 14px; }
 
-      .hero-title { font-size: clamp(1.4rem, 7.5vw, 1.7rem); }
+      /* À 360px : padding réduit à 14px → contenu = 332px. 4.1vw = 14.76px.
+         La ligne de 47 chars tient (~303px < 332px) */
+      .hero-title { font-size: clamp(13px, 4.1vw, 1.9rem); }
       .sec-header h2 { font-size: 16px !important; }
       #process .sec-header h2 { font-size: 15px !important; }
 
