@@ -1654,11 +1654,11 @@
       position: relative;
       overflow: hidden;
     }
-    /* LEFT — dismissed, muted */
+    /* LEFT — visible but clearly "wrong" */
     .prob-panel--bad {
-      flex: 0 0 42%;
-      background: rgba(6,0,12,0.92);
-      opacity: 0.7;
+      flex: 0 0 44%;
+      background: rgba(30,4,4,0.85);
+      border-right: 1px solid rgba(239,68,68,0.15);
     }
     .prob-panel--bad::before {
       content: '';
@@ -1666,9 +1666,9 @@
       background-image: repeating-linear-gradient(
         135deg,
         transparent,
-        transparent 11px,
-        rgba(239,68,68,0.055) 11px,
-        rgba(239,68,68,0.055) 12px
+        transparent 10px,
+        rgba(239,68,68,0.045) 10px,
+        rgba(239,68,68,0.045) 11px
       );
       pointer-events: none;
     }
@@ -1676,8 +1676,8 @@
       content: '✕';
       position: absolute; right: 14px; bottom: 6px;
       font-family: var(--font-head);
-      font-size: 60px; font-weight: 900;
-      color: rgba(239,68,68,0.07);
+      font-size: 68px; font-weight: 900;
+      color: rgba(239,68,68,0.1);
       line-height: 1;
       pointer-events: none;
     }
@@ -1685,31 +1685,31 @@
     .prob-panel--good {
       flex: 1;
       background: linear-gradient(135deg,
-        rgba(80,0,140,0.28) 0%,
-        rgba(50,0,100,0.38) 45%,
-        rgba(130,0,200,0.22) 100%
+        rgba(90,0,155,0.35) 0%,
+        rgba(60,0,115,0.45) 45%,
+        rgba(140,0,210,0.28) 100%
       );
-      border-left: 1px solid rgba(224,64,251,0.24);
+      border-left: 1px solid rgba(224,64,251,0.3);
     }
     .prob-panel--good::before {
       content: '';
       position: absolute; inset: 0;
-      background: radial-gradient(ellipse at 65% 50%, rgba(224,64,251,0.14) 0%, transparent 68%);
+      background: radial-gradient(ellipse at 60% 50%, rgba(224,64,251,0.18) 0%, transparent 65%);
       pointer-events: none;
     }
     .prob-panel--good::after {
       content: '!';
-      position: absolute; right: 22px; bottom: 2px;
+      position: absolute; right: 20px; bottom: 2px;
       font-family: var(--font-head);
-      font-size: 80px; font-weight: 900;
-      color: rgba(224,64,251,0.09);
+      font-size: 88px; font-weight: 900;
+      color: rgba(224,64,251,0.1);
       line-height: 1;
       pointer-events: none;
     }
     /* VS badge at boundary */
     .prob-vs-wrap {
       position: absolute;
-      left: 42%; top: 0; bottom: 0;
+      left: 44%; top: 0; bottom: 0;
       transform: translateX(-50%);
       display: flex;
       flex-direction: column;
@@ -1736,7 +1736,7 @@
       letter-spacing: 0.16em; text-transform: uppercase;
       margin-bottom: 2px;
     }
-    .prob-panel--bad  .prob-panel-label { color: rgba(239,68,68,0.55); }
+    .prob-panel--bad  .prob-panel-label { color: #FC8080; }
     .prob-panel--good .prob-panel-label { color: var(--pink-light); }
 
     .prob-panel-title {
@@ -1745,10 +1745,10 @@
       line-height: 1.2;
     }
     .prob-panel--bad .prob-panel-title {
-      font-size: clamp(13px, 1.6vw, 16px);
-      color: rgba(255,255,255,0.42);
+      font-size: clamp(14px, 1.8vw, 17px);
+      color: rgba(255,255,255,0.72);
       text-decoration: line-through;
-      text-decoration-color: rgba(239,68,68,0.38);
+      text-decoration-color: rgba(239,68,68,0.55);
     }
     .prob-panel--good .prob-panel-title {
       font-size: clamp(17px, 2.2vw, 22px);
@@ -1758,20 +1758,31 @@
       font-size: 12px;
       line-height: 1.5;
     }
-    .prob-panel--bad  .prob-panel-sub { color: rgba(255,255,255,0.24); }
+    .prob-panel--bad  .prob-panel-sub { color: rgba(255,255,255,0.45); }
     .prob-panel--good .prob-panel-sub { color: var(--text-muted); }
 
-    @keyframes split-right-pulse {
-      0%, 100% { box-shadow: inset 0 0 0 1px rgba(224,64,251,0.18), 0 0 22px rgba(224,64,251,0.06); }
-      50%       { box-shadow: inset 0 0 0 1px rgba(224,64,251,0.38), 0 0 40px rgba(224,64,251,0.14); }
+    /* Rotating glow around the right panel */
+    @property --glow-angle {
+      syntax: '<angle>';
+      initial-value: 0deg;
+      inherits: false;
     }
-    .prob-split .prob-panel--good { animation: split-right-pulse 3.5s ease-in-out infinite; }
+    @keyframes glow-rotate {
+      to { --glow-angle: 360deg; }
+    }
+    @keyframes split-right-pulse {
+      0%, 100% { box-shadow: 0 0 18px rgba(224,64,251,0.1), 0 0 40px rgba(155,0,217,0.06); }
+      50%       { box-shadow: 0 0 32px rgba(224,64,251,0.22), 0 0 70px rgba(155,0,217,0.14); }
+    }
+    .prob-split .prob-panel--good {
+      animation: split-right-pulse 3.2s ease-in-out infinite;
+    }
 
     @media (max-width: 500px) {
       .prob-split { flex-direction: column; }
       .prob-panel--bad  { flex: none; padding: 28px 22px; }
       .prob-panel--good { flex: none; padding: 28px 22px; }
-      .prob-vs-wrap { left: 50%; top: 42%; bottom: auto; transform: translateX(-50%) translateY(-50%); }
+      .prob-vs-wrap { left: 50%; top: 44%; bottom: auto; transform: translateX(-50%) translateY(-50%); }
     }
 
     /* ══════════════════════════════════════
@@ -2796,15 +2807,15 @@
       <div class="marc-left fi fi-left">
         <!-- Main photo -->
         <div class="photo-frame">
-          <img src="IMAGE POUR CLAUDE/Photo de Marc sur un ordinateur.JPG" alt="Marc sur son ordinateur" style="aspect-ratio:3/2;width:100%;">
+          <img src="marc-ordinateur.jpg" alt="Marc sur son ordinateur" style="aspect-ratio:3/2;width:100%;">
         </div>
         <!-- Secondary photos side-by-side -->
         <div class="photo-row">
           <div class="photo-frame">
-            <img src="IMAGE POUR CLAUDE/bain de glace avec Wim Hof.png" alt="Bain de glace avec Wim Hof" style="aspect-ratio:1;">
+            <img src="marc-wim-bain.png" alt="Bain de glace avec Wim Hof" style="aspect-ratio:1;">
           </div>
           <div class="photo-frame">
-            <img src="IMAGE POUR CLAUDE/Marc et Wim Hof.PNG.PNG" alt="Marc avec Wim Hof" style="aspect-ratio:1;">
+            <img src="marc-wim-hof.png" alt="Marc avec Wim Hof" style="aspect-ratio:1;">
           </div>
         </div>
         <!-- Triangle stat cards -->
