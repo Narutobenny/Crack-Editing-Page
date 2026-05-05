@@ -2224,6 +2224,83 @@
     }
 
     /* ══════════════════════════════════════
+       SECTION TRAVAIL DES ÉLÈVES
+    ══════════════════════════════════════ */
+    #eleves { background: var(--bg2); }
+
+    /* Container de la vidéo — spinning border violet */
+    .eleves-video-wrap {
+      position: relative;
+      max-width: 780px;
+      margin: 0 auto;
+      border-radius: var(--r-xl);
+      padding: 3px; /* épaisseur de la bordure */
+      background: conic-gradient(
+        from var(--ba, 0deg) at 50% 50%,
+        #0c0016 0deg,
+        #0c0016 52deg,
+        #5a0090 70deg,
+        #a800d8 82deg,
+        #e040fb 90deg,
+        #f490ff 94deg,
+        #e040fb 98deg,
+        #a800d8 108deg,
+        #5a0090 120deg,
+        #0c0016 138deg,
+        #0c0016 360deg
+      );
+      animation: spin-border 4s linear infinite;
+      /* Halo de lueur */
+      box-shadow:
+        0 0 0 1px rgba(155,0,217,0.4),
+        0 0 40px rgba(224,64,251,0.2),
+        0 0 80px rgba(155,0,217,0.12),
+        0 24px 64px rgba(0,0,0,0.5);
+    }
+
+    /* Fond intérieur sombre — illusion de bordure */
+    .eleves-video-inner {
+      border-radius: calc(var(--r-xl) - 2px);
+      overflow: hidden;
+      background: #000;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* L'élément vidéo lui-même */
+    .eleves-video {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: calc(var(--r-xl) - 2px);
+    }
+
+    /* Pulse de lueur supplémentaire */
+    @keyframes eleves-glow-pulse {
+      0%, 100% { box-shadow: 0 0 40px rgba(224,64,251,0.2), 0 0 80px rgba(155,0,217,0.12), 0 24px 64px rgba(0,0,0,0.5); }
+      50%       { box-shadow: 0 0 60px rgba(224,64,251,0.35), 0 0 120px rgba(155,0,217,0.22), 0 24px 64px rgba(0,0,0,0.5); }
+    }
+    .eleves-video-wrap {
+      animation: spin-border 4s linear infinite, eleves-glow-pulse 3s ease-in-out infinite;
+    }
+
+    /* Sous-titre discret sous la vidéo */
+    .eleves-caption {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 13px;
+      color: var(--text-dim);
+      letter-spacing: 0.04em;
+    }
+    .eleves-caption span { color: var(--pink-light); font-weight: 600; }
+
+    @media (max-width: 480px) {
+      .eleves-video-wrap { max-width: 100%; border-radius: var(--r-lg); }
+      .eleves-video-inner { border-radius: calc(var(--r-lg) - 2px); }
+      .eleves-video       { border-radius: calc(var(--r-lg) - 2px); }
+    }
+
+    /* ══════════════════════════════════════
        MOBILE RESPONSIVE
        900px — Booking centré quand empilé
        768px — Tablettes & grands téléphones
@@ -3096,6 +3173,43 @@
           <p style="font-size:13px;color:var(--text-dim);margin-top:10px;">Gratuit · Sans engagement · 30 minutes</p>
         </div>
       </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ════════════════════════════════════
+     TRAVAIL DES ÉLÈVES
+════════════════════════════════════ -->
+<section id="eleves" class="sec">
+  <div class="wrap--md">
+
+    <div class="sec-header">
+      <div class="eyebrow fi" style="justify-content:center;">Résultats concrets</div>
+      <h2 class="fi">
+        Le travail de <span class="grad">mes élèves.</span>
+      </h2>
+      <p class="fi">Ce que tu seras capable de produire après Crack Editing.</p>
+    </div>
+
+    <div class="fi">
+      <div class="eleves-video-wrap">
+        <div class="eleves-video-inner">
+          <video
+            class="eleves-video"
+            autoplay
+            loop
+            muted
+            playsinline
+            preload="auto"
+          >
+            <source src="travail-eleves.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+      <p class="eleves-caption">Extraits du travail de mes élèves · <span>250+ monteurs formés</span></p>
     </div>
 
   </div>
