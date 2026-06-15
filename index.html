@@ -2327,6 +2327,26 @@
       border-radius: calc(var(--r-xl) - 2px);
     }
 
+    /* YouTube iframe 16:9 plein cadre */
+    .eleves-yt-wrap {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%; /* ratio 16:9 */
+    }
+    .eleves-yt-frame {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+      /* Masquer la barre YouTube en débordant légèrement */
+      top: -1px;
+      left: -1px;
+      width: calc(100% + 2px);
+      height: calc(100% + 2px);
+    }
+
     /* Pulse de lueur supplémentaire */
     @keyframes eleves-glow-pulse {
       0%, 100% { box-shadow: 0 0 40px rgba(224,64,251,0.2), 0 0 80px rgba(155,0,217,0.12), 0 24px 64px rgba(0,0,0,0.5); }
@@ -2663,8 +2683,8 @@
   <!-- Title — wide wrap so the headline can breathe -->
   <div class="wrap" style="position:relative;z-index:1;">
     <h1 class="hero-title hero-anim hero-anim-1">
-      Deviens un monteur irremplaçable<br>
-      et facture <span class="grad">3000€/mois minimum</span> en 90 jours.
+      Deviens un monteur irremplaçable et<br>
+      facture <span class="grad">3000€/mois minimum</span> en 90 jours.
     </h1>
     <p class="hero-sub hero-anim hero-anim-2">
       sans prospecter · sans négocier · sans refaire ton portfolio
@@ -3262,16 +3282,17 @@
     <div class="fi">
       <div class="eleves-video-wrap">
         <div class="eleves-video-inner">
-          <video
-            class="eleves-video"
-            id="eleves-video"
-            loop
-            muted
-            playsinline
-            preload="none"
-          >
-            <source src="travail-eleves.mp4" type="video/mp4">
-          </video>
+          <div class="eleves-yt-wrap">
+            <iframe
+              class="eleves-yt-frame"
+              src="https://www.youtube.com/embed/zfVd5dYqWkE?autoplay=1&mute=1&loop=1&playlist=zfVd5dYqWkE&controls=0&modestbranding=1&rel=0&iv_load_policy=3&disablekb=1&fs=0&cc_load_policy=0&playsinline=1"
+              title="Travail des élèves Crack Editing"
+              frameborder="0"
+              allow="autoplay; loop"
+              allowfullscreen
+              loading="lazy"
+            ></iframe>
+          </div>
         </div>
       </div>
       <p class="eleves-caption">Extraits du travail de mes élèves · <span>250+ monteurs formés</span></p>
@@ -3398,7 +3419,7 @@
       </div>
       <div class="fq">
         <button class="fq-q" onclick="toggleFaq(this)">Pourquoi faire confiance à Marc et pas un autre ?<span class="fq-icon">▾</span></button>
-        <div class="fq-a"><p class="fq-short">Marc a déjà fait ses preuves. 250+ monteurs formés, des résultats concrets et documentés.</p><p>Si tu veux apprendre à le connaître avant de te lancer, tu peux aller regarder ses vidéos sur YouTube — cherche <strong>"Marc Editing"</strong>. Tout est là : son approche, sa façon de penser, ses méthodes. Tu jugeras par toi-même.</p></div>
+        <div class="fq-a"><p class="fq-short">Marc a déjà fait ses preuves. 250+ monteurs formés, des résultats concrets et documentés.</p><p>Si tu veux apprendre à le connaître avant de te lancer, tu peux aller regarder ses vidéos sur YouTube — <a href="https://www.youtube.com/@MarcEksuzyan" target="_blank" rel="noopener" style="color:var(--pink);font-weight:700;text-decoration:none;border-bottom:1px solid rgba(224,64,251,0.4);transition:border-color 0.15s;" onmouseover="this.style.borderColor='rgba(224,64,251,0.9)'" onmouseout="this.style.borderColor='rgba(224,64,251,0.4)'">Marc Editing</a>. Tout est là : son approche, sa façon de penser, ses méthodes. Tu jugeras par toi-même.</p></div>
       </div>
     </div>
   </div>
@@ -3504,22 +3525,6 @@
     document.querySelectorAll('.fq').forEach(el => el.classList.remove('open'));
     if (!isOpen) item.classList.add('open');
   }
-
-  /* ─── VIDÉO ÉLÈVES — lecture au scroll, pas au chargement ─── */
-  (function() {
-    const vid = document.getElementById('eleves-video');
-    if (!vid) return;
-    const obs = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          vid.play().catch(() => {});
-        } else {
-          vid.pause();
-        }
-      });
-    }, { threshold: 0.3 });
-    obs.observe(vid);
-  })();
 
   /* ─── SCROLL FADE-IN — section-aware stagger ─── */
   const io = new IntersectionObserver(entries => {
