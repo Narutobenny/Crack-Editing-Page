@@ -3282,17 +3282,16 @@
     <div class="fi">
       <div class="eleves-video-wrap">
         <div class="eleves-video-inner">
-          <div class="eleves-yt-wrap">
-            <iframe
-              class="eleves-yt-frame"
-              src="https://www.youtube.com/embed/zfVd5dYqWkE?autoplay=1&mute=1&loop=1&playlist=zfVd5dYqWkE&controls=0&modestbranding=1&rel=0&iv_load_policy=3&disablekb=1&fs=0&cc_load_policy=0&playsinline=1"
-              title="Travail des élèves Crack Editing"
-              frameborder="0"
-              allow="autoplay; loop"
-              allowfullscreen
-              loading="lazy"
-            ></iframe>
-          </div>
+          <video
+            class="eleves-video"
+            id="eleves-video"
+            loop
+            muted
+            playsinline
+            preload="none"
+          >
+            <source src="travail-eleves.mp4" type="video/mp4">
+          </video>
         </div>
       </div>
       <p class="eleves-caption">Extraits du travail de mes élèves · <span>250+ monteurs formés</span></p>
@@ -3525,6 +3524,19 @@
     document.querySelectorAll('.fq').forEach(el => el.classList.remove('open'));
     if (!isOpen) item.classList.add('open');
   }
+
+  /* ─── VIDÉO ÉLÈVES — lecture au scroll, pas au chargement ─── */
+  (function() {
+    const vid = document.getElementById('eleves-video');
+    if (!vid) return;
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { vid.play().catch(() => {}); }
+        else { vid.pause(); }
+      });
+    }, { threshold: 0.3 });
+    obs.observe(vid);
+  })();
 
   /* ─── SCROLL FADE-IN — section-aware stagger ─── */
   const io = new IntersectionObserver(entries => {
