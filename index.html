@@ -2720,6 +2720,7 @@
             frameborder="0"
             allow="autoplay; fullscreen; picture-in-picture"
             allowfullscreen
+            tabindex="-1"
             loading="eager"
           ></iframe>
         </div>
@@ -3465,7 +3466,7 @@
       <!-- RIGHT: iframe calendrier -->
       <div class="fi">
         <div class="booking-wrap">
-          <iframe class="booking-frame" src="https://app.iclosed.io/e/marceksuzyan/org-appel-crck-editing" title="Calendrier Crack Editing" loading="lazy"></iframe>
+          <iframe class="booking-frame" src="https://app.iclosed.io/e/marceksuzyan/org-appel-crck-editing" title="Calendrier Crack Editing" loading="lazy" tabindex="-1"></iframe>
         </div>
       </div>
 
@@ -3495,6 +3496,11 @@
 </footer>
 
 <script>
+  /* ─── FORCE SCROLL TOP — empêche les iframes de voler le focus ─── */
+  if (history.scrollRestoration) history.scrollRestoration = 'manual';
+  window.scrollTo(0, 0);
+  window.addEventListener('load', () => window.scrollTo(0, 0));
+
   /* ─── FAQ ─── */
   function toggleFaq(btn) {
     const item = btn.closest('.fq');
