@@ -364,6 +364,22 @@
     .wistia_responsive_padding { padding: 56.25% 0 0; position: relative; }
     .wistia_responsive_wrapper { height: 100%; left: 0; position: absolute; top: 0; width: 100%; }
 
+    /* VSL YouTube 16:9 */
+    .vsl-yt-wrap {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%;
+      background: #000;
+    }
+    .vsl-yt-frame {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
     /* CTA block */
     .cta-block {
       padding: 24px 0 40px;
@@ -2696,24 +2712,17 @@
     <div class="vsl-wrap hero-anim hero-anim-3">
       <div class="vsl-halo"></div>
       <div class="vsl-frame">
-        <!-- FAÇADE : thumbnail statique, Wistia chargé au clic uniquement -->
-        <div class="vsl-facade" id="vsl-facade" onclick="loadVSL()" role="button" aria-label="Lancer la vidéo de présentation">
-          <img
-            class="vsl-facade-thumb"
-            src="https://fast.wistia.com/embed/medias/4p44zgusuu/swatch"
-            alt="Miniature vidéo Crack Editing"
-            width="580" height="326"
+        <div class="vsl-yt-wrap">
+          <iframe
+            class="vsl-yt-frame"
+            src="https://www.youtube.com/embed/pjj0-sNMyoY?autoplay=1&mute=1&controls=1&fs=1&modestbranding=1&rel=0&iv_load_policy=3&cc_load_policy=0&playsinline=1"
+            title="Présentation Crack Editing"
+            frameborder="0"
+            allow="autoplay; fullscreen; picture-in-picture"
+            allowfullscreen
             loading="eager"
-          >
-          <div class="vsl-facade-overlay">
-            <button class="vsl-play-btn" tabindex="-1" aria-hidden="true">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
-            </button>
-            <span class="vsl-facade-label">Regarder la présentation</span>
-          </div>
+          ></iframe>
         </div>
-        <!-- PLAYER : injecté dynamiquement au clic -->
-        <div class="vsl-player" id="vsl-player"></div>
       </div>
     </div>
 
@@ -3486,37 +3495,6 @@
 </footer>
 
 <script>
-  /* ─── VSL FAÇADE — charge Wistia uniquement au clic ─── */
-  function loadVSL() {
-    const facade = document.getElementById('vsl-facade');
-    const player = document.getElementById('vsl-player');
-
-    // Injecter l'embed Wistia avec autoPlay
-    player.innerHTML = `
-      <div class="wistia_responsive_padding">
-        <div class="wistia_responsive_wrapper">
-          <div class="wistia_embed wistia_async_4p44zgusuu autoPlay=true videoFoam=true"
-               style="height:100%;position:relative;width:100%">&nbsp;</div>
-        </div>
-      </div>`;
-
-    // Charger le script Wistia dynamiquement
-    if (!document.querySelector('script[src*="wistia.com"]')) {
-      const s = document.createElement('script');
-      s.src = 'https://fast.wistia.com/assets/external/E-v1.js';
-      s.async = true;
-      document.head.appendChild(s);
-    }
-
-    // Transition façade → player
-    facade.style.transition = 'opacity 0.25s ease';
-    facade.style.opacity = '0';
-    setTimeout(() => {
-      facade.style.display = 'none';
-      player.classList.add('active');
-    }, 250);
-  }
-
   /* ─── FAQ ─── */
   function toggleFaq(btn) {
     const item = btn.closest('.fq');
