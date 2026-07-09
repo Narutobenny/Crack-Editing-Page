@@ -383,6 +383,40 @@
       display: block;
     }
 
+    /* Bouton "Activer le son" par-dessus la VSL */
+    .vsl-unmute {
+      position: absolute;
+      z-index: 6;
+      left: 50%; bottom: 18px;
+      transform: translateX(-50%);
+      display: inline-flex;
+      align-items: center; gap: 9px;
+      background: var(--pink);
+      color: #fff;
+      border: none;
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 15px;
+      padding: 13px 24px;
+      border-radius: 100px;
+      cursor: pointer;
+      white-space: nowrap;
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.25), 0 6px 24px rgba(224,64,251,0.55), 0 0 0 0 rgba(224,64,251,0.5);
+      animation: vsl-unmute-pulse 1.8s ease-in-out infinite;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+    .vsl-unmute:hover { transform: translateX(-50%) translateY(-2px); }
+    .vsl-unmute svg { flex-shrink: 0; }
+    .vsl-unmute.hide { opacity: 0; pointer-events: none; transform: translateX(-50%) scale(0.9); }
+    @keyframes vsl-unmute-pulse {
+      0%, 100% { box-shadow: 0 0 0 1px rgba(255,255,255,0.25), 0 6px 24px rgba(224,64,251,0.55), 0 0 0 0 rgba(224,64,251,0.45); }
+      50%      { box-shadow: 0 0 0 1px rgba(255,255,255,0.25), 0 6px 28px rgba(224,64,251,0.7), 0 0 0 10px rgba(224,64,251,0); }
+    }
+    @media (prefers-reduced-motion: reduce) { .vsl-unmute { animation: none; } }
+    @media (max-width: 480px) {
+      .vsl-unmute { font-size: 13px; padding: 10px 18px; bottom: 12px; }
+    }
+
     /* CTA block */
     .cta-block {
       padding: 24px 0 40px;
@@ -2783,18 +2817,11 @@
       <div class="vsl-halo"></div>
       <div class="vsl-frame">
         <div class="vsl-yt-wrap">
-          <iframe
-            class="vsl-yt-frame"
-            src="https://fast.wistia.net/embed/iframe/4p44zgusuu?autoPlay=true&muted=true&playsinline=true&fullscreenButton=true&playbar=true&volumeControl=true"
-            title="Présentation Crack Editing"
-            frameborder="0"
-            scrolling="no"
-            allow="autoplay; fullscreen"
-            allowfullscreen
-            allowtransparency="true"
-            tabindex="-1"
-            loading="eager"
-          ></iframe>
+          <div id="wistia-vsl" class="wistia_embed wistia_async_4p44zgusuu vsl-yt-frame" style="position:absolute;inset:0;width:100%;height:100%;">&nbsp;</div>
+          <button class="vsl-unmute" id="vsl-unmute" type="button" aria-label="Activer le son">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+            <span>Activer le son</span>
+          </button>
           <script src="https://fast.wistia.net/assets/external/E-v1.js" async></script>
         </div>
       </div>
@@ -3021,6 +3048,39 @@
   if (history.scrollRestoration) history.scrollRestoration = 'manual';
   window.scrollTo(0, 0);
   window.addEventListener('load', () => window.scrollTo(0, 0));
+
+  /* ─── VSL WISTIA — autoplay muet + bouton "Activer le son" ─── */
+  window._wq = window._wq || [];
+  window._wq.push({
+    id: '4p44zgusuu',
+    options: {
+      autoPlay: true,
+      muted: true,
+      playsinline: true,
+      videoFoam: true,
+      fullscreenButton: true,
+      playbar: true,
+      volumeControl: true,
+      settingsControl: true
+    },
+    onReady: function(video) {
+      var btn = document.getElementById('vsl-unmute');
+      if (!btn) return;
+      function sync() {
+        if (video.isMuted()) { btn.classList.remove('hide'); }
+        else { btn.classList.add('hide'); }
+      }
+      sync();
+      video.bind('mutechange', sync);
+      // Si le son démarre déjà activé (desktop autorisé), on cache le bouton
+      video.bind('play', sync);
+      btn.addEventListener('click', function() {
+        video.unmute();
+        video.play();
+        btn.classList.add('hide');
+      });
+    }
+  });
 
   /* ─── MODALES LÉGALES ─── */
   function openLegal(id) {
